@@ -5,22 +5,31 @@ from genetic_algorithm.evaluation import schwefel
 from config import POP_SIZE, GENS, MUT_RATE, CROSS_RATE, DIM, X_MIN, X_MAX, ITERATION
 
 # Importowanie funkcji mutacji, krzyżowania i selekcji
-from genetic_algorithm.mutation import gaussian_mutation
-from genetic_algorithm.crossover import one_point_crossover
-from genetic_algorithm.selection import tournament_selection
+from genetic_algorithm.mutation import gaussian_mutation, uniform_mutation
+from genetic_algorithm.crossover import arithmetic_crossover, average_crossover, blend_crossover_alpha, blend_crossover_alpha_beta, linear_crossover, one_point_crossover
+from genetic_algorithm.selection import elitist_selection, roulette_wheel_selection, tournament_selection
 
 # Mapowanie nazw funkcji na odpowiednie funkcje
+
 mutation_functions = {
     "gaussian_mutation": gaussian_mutation,
+    "uniform_mutation": uniform_mutation,
 }
 
 crossover_functions = {
     "one_point_crossover": one_point_crossover,
+    "arithmetic_crossover": arithmetic_crossover,
+    "linear_crossover": linear_crossover,
+    "blend_crossover_alpha": blend_crossover_alpha,
+    "blend_crossover_alpha_beta": blend_crossover_alpha_beta,
+    "average_crossover": average_crossover,
 }
 
 selection_functions = {
     "tournament_selection": tournament_selection,
+    "roulette_wheel_selection": roulette_wheel_selection,
 }
+
 
 def run_genetic_algorithm(mutation_function, crossover_function, selection_function, mutation_rate, elitism_rate, pop_size, gens, x_min, x_max, dim):
     best_solution = genetic_algorithm(mutation_function, crossover_function, selection_function, mutation_rate, elitism_rate, pop_size, gens, x_min, x_max, dim)
@@ -47,7 +56,7 @@ def create_gui():
 
     # Mutation function
     ttk.Label(container, text="Select Mutation Function:").grid(row=r, column=0, sticky=tk.W, pady=5)
-    mutation_options = ["gaussian_mutation"]  # Zostawiamy tylko jedną opcję
+    mutation_options = list(mutation_functions.keys())
     mutation_combobox = ttk.Combobox(container, values=mutation_options, state="readonly")
     mutation_combobox.grid(row=r, column=1, pady=5, sticky=tk.EW)
     mutation_combobox.set("gaussian_mutation")
@@ -55,7 +64,7 @@ def create_gui():
 
     # Crossover function
     ttk.Label(container, text="Select Crossover Function:").grid(row=r, column=0, sticky=tk.W, pady=5)
-    crossover_options = ["one_point_crossover"]  # Zostawiamy tylko jedną opcję
+    crossover_options = list(crossover_functions.keys())
     crossover_combobox = ttk.Combobox(container, values=crossover_options, state="readonly")
     crossover_combobox.grid(row=r, column=1, pady=5, sticky=tk.EW)
     crossover_combobox.set("one_point_crossover")
@@ -63,7 +72,7 @@ def create_gui():
 
     # Selection function
     ttk.Label(container, text="Select Selection Function:").grid(row=r, column=0, sticky=tk.W, pady=5)
-    selection_options = ["tournament_selection"]  # Zostawiamy tylko jedną opcję
+    selection_options = list(selection_functions.keys())
     selection_combobox = ttk.Combobox(container, values=selection_options, state="readonly")
     selection_combobox.grid(row=r, column=1, pady=5, sticky=tk.EW)
     selection_combobox.set("tournament_selection")
