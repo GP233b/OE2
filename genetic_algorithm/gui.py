@@ -6,7 +6,7 @@ from config import POP_SIZE, GENS, MUT_RATE, CROSS_RATE, DIM, X_MIN, X_MAX, ITER
 
 # Importowanie funkcji mutacji, krzyżowania i selekcji
 from genetic_algorithm.mutation import gaussian_mutation, uniform_mutation
-from genetic_algorithm.crossover import arithmetic_crossover, average_crossover, blend_crossover_alpha, blend_crossover_alpha_beta, linear_crossover, one_point_crossover
+from genetic_algorithm.crossover import arithmetic_crossover, average_crossover, blend_crossover_alpha, blend_crossover_alpha_beta, linear_crossover
 from genetic_algorithm.selection import elitist_selection, roulette_wheel_selection, tournament_selection
 
 # Mapowanie nazw funkcji na odpowiednie funkcje
@@ -17,7 +17,6 @@ mutation_functions = {
 }
 
 crossover_functions = {
-    "one_point_crossover": one_point_crossover,
     "arithmetic_crossover": arithmetic_crossover,
     "linear_crossover": linear_crossover,
     "blend_crossover_alpha": blend_crossover_alpha,
@@ -67,7 +66,7 @@ def create_gui():
     crossover_options = list(crossover_functions.keys())
     crossover_combobox = ttk.Combobox(container, values=crossover_options, state="readonly")
     crossover_combobox.grid(row=r, column=1, pady=5, sticky=tk.EW)
-    crossover_combobox.set("one_point_crossover")
+    crossover_combobox.set("arithmetic_crossover")
     r += 1
 
     # Selection function
