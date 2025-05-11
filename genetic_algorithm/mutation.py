@@ -2,28 +2,15 @@ import numpy as np
 import sys
 sys.path.append('../')
 from config import X_MIN, X_MAX
-
-def boundary_mutation(individual, rate):
-    if np.random.rand() < rate:
-        idx = np.random.randint(len(individual))
-        individual[idx] = X_MIN if np.random.rand() < 0.5 else X_MAX
+def uniform_mutation(individual, rate):
+    for i in range(len(individual)):
+        if np.random.rand() < rate:
+            individual[i] = np.random.uniform(X_MIN, X_MAX)
     return individual
 
-def single_point_mutation(individual, rate):
-    if np.random.rand() < rate:
-        idx = np.random.randint(len(individual))
-        individual[idx] = np.random.uniform(X_MIN, X_MAX)
-    return individual
-
-def two_point_mutation(individual, rate):
-    if np.random.rand() < rate:
-        idx1, idx2 = np.random.choice(len(individual), 2, replace=False)
-        individual[idx1], individual[idx2] = individual[idx2], individual[idx1]
-    return individual
-
-def gaussian_mutation(individual, rate):
-    if np.random.rand() < rate:
-        idx = np.random.randint(len(individual))
-        individual[idx] += np.random.normal(0, 20)
-        individual[idx] = np.clip(individual[idx], X_MIN, X_MAX)
+def gaussian_mutation(individual, rate, sigma=1.0):
+    for i in range(len(individual)):
+        if np.random.rand() < rate:
+            individual[i] += np.random.normal(0, sigma)
+            individual[i] = np.clip(individual[i], X_MIN, X_MAX)
     return individual
