@@ -26,4 +26,3 @@ def blend_crossover_alpha_beta(parent1, parent2, alpha=0.4, beta=0.6, x_min=-5, 
 def average_crossover(parent1, parent2, x_min=-5, x_max=5):
     child = (parent1 + parent2) / 2.0
     return np.clip(child, x_min, x_max), np.clip(child.copy(), x_min, x_max)
-
